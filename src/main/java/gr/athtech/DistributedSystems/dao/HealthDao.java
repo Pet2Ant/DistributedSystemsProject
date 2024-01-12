@@ -46,6 +46,8 @@ public class HealthDao implements HealthDaoInterface {
 
 
 
+
+
     // GET BY ID
     @Override
     public HealthData findHealthDataById(int healthDataId) {
@@ -72,6 +74,98 @@ public class HealthDao implements HealthDaoInterface {
             } else {
                 return null;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public Double averageBloodGlucoseLevelOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate) {
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        String sqlCommand;
+        if(startDate != null && endDate != null && startDate.after(endDate)) return null;
+        else if(startDate == null && endDate == null) {
+            sqlCommand = "SELECT * FROM health_data;";
+        } else if (startDate == null) {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN (SELECT MIN(date) FROM health_data) AND ?;";
+        } else if (endDate == null) {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND (SELECT MAX(date) FROM health_data);";
+        } else {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND ?;";
+        }
+            // Open a connection
+            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+                 PreparedStatement stmt = conn.prepareStatement(sqlCommand);
+            ) {
+                ResultSet results = stmt.executeQuery();
+                if (results.next()) {
+                    return results.getDouble(1);
+                } else {
+                    return null;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+    }
+
+    @Override
+    public Double averageCarbIntakeOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate) {
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        String sqlCommand;
+        if(startDate != null && endDate != null && startDate.after(endDate)) return null;
+        else if(startDate == null && endDate == null) {
+            sqlCommand = "SELECT * FROM health_data;";
+        } else if (startDate == null) {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN (SELECT MIN(date) FROM health_data) AND ?;";
+        } else if (endDate == null) {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND (SELECT MAX(date) FROM health_data);";
+        } else {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND ?;";
+        }
+            // Open a connection
+            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+                 PreparedStatement stmt = conn.prepareStatement(sqlCommand);
+            ) {
+                ResultSet results = stmt.executeQuery();
+                if (results.next()) {
+                    return results.getDouble(1);
+                } else {
+                    return null;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+    }
+
+    @Override
+    public void createHealthDatas(List<HealthData> healthDataList) {
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        String sqlCommand = "INSERT INTO health_data (id, blood_glucose_level, carb_intake, medication_dose, date) VALUES (?, ?, ?, ?, ?);";
+        // Open a connection
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement stmt = conn.prepareStatement(sqlCommand, Statement.RETURN_GENERATED_KEYS);
+        ) {
+            for (HealthData healthData : healthDataList) {
+                stmt.setInt(1, healthData.getId());
+                stmt.setDouble(2, healthData.getBloodGlucoseLevel());
+                stmt.setDouble(3, healthData.getCarbIntake());
+                stmt.setDouble(4, healthData.getMedicationDose());
+                stmt.setDate(5, healthData.getDate());
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -116,15 +210,23 @@ public class HealthDao implements HealthDaoInterface {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        if(startDate==null || endDate==null) return findAllHealthData();
-        String sqlCommand = "select * from health_data where date between ? and ?;";
+        String sqlCommand;
+        if(startDate != null && endDate != null && startDate.after(endDate)) return null;
+        else if(startDate == null && endDate == null) {
+            sqlCommand = "SELECT * FROM health_data;";
+        } else if (startDate == null) {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN (SELECT MIN(date) FROM health_data) AND ?;";
+        } else if (endDate == null) {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND (SELECT MAX(date) FROM health_data);";
+        } else {
+            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND ?;";
+        }
         // Open a connection
         try( Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement stmt = conn.prepareStatement(sqlCommand );
         ) {
-
-            stmt.setDate(1, startDate);
-            stmt.setDate(2, endDate);
+            if(startDate != null) stmt.setDate(1, startDate);
+            if(endDate != null) stmt.setDate(startDate == null ? 1 : 2, endDate);
             ResultSet results = stmt.executeQuery();
             while( results.next()) {
                 HealthData healthData = new HealthData();
@@ -141,6 +243,7 @@ public class HealthDao implements HealthDaoInterface {
 
         return healthDatas;
     }
+
 
     // PUT
     @Override

@@ -28,6 +28,20 @@ public class HealthDataResource {
     public List<HealthData> displayOverTimePeriod(@QueryParam("startDate") java.sql.Date startDate , @QueryParam("endDate") java.sql.Date endDate) {
         return healthDao.displayOverTimePeriod(startDate, endDate);
     }
+    @GET
+    @Path("/avgGlucose")
+    @Produces(MediaType.APPLICATION_JSON )
+    @Consumes(MediaType.APPLICATION_JSON )
+    public Double averageBloodGlucoseLevelOverTimePeriod(@QueryParam("startDate") java.sql.Date startDate , @QueryParam("endDate") java.sql.Date endDate) {
+        return healthDao.averageBloodGlucoseLevelOverTimePeriod(startDate, endDate);
+    }
+    @GET
+    @Path("/avgCarbs")
+    @Produces(MediaType.APPLICATION_JSON )
+    @Consumes(MediaType.APPLICATION_JSON )
+    public Double averageCarbIntakeOverTimePeriod(@QueryParam("startDate") java.sql.Date startDate , @QueryParam("endDate") java.sql.Date endDate) {
+        return healthDao.averageCarbIntakeOverTimePeriod(startDate, endDate);
+    }
 
 
     @GET
@@ -52,6 +66,14 @@ public class HealthDataResource {
     public HealthData createHealthData(HealthData healthData) {
         healthDao.save(healthData);
         return healthData;
+    }
+    @POST
+    @Path("/mass")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<HealthData> createHealthDatas(List<HealthData> healthDataList) {
+            healthDao.createHealthDatas(healthDataList);
+        return healthDataList;
     }
 
     @PUT

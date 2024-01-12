@@ -15,7 +15,12 @@ public interface HealthDaoInterface {
      List<HealthData> findAllHealthData();
 
      List<HealthData> displayOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate);
-     
+     Double averageBloodGlucoseLevelOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate);
+     Double averageCarbIntakeOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate);
+
+     void createHealthDatas(List<HealthData> healthDataList);
+
+
      // PUT
      boolean changeHealthDataById(int healthDataId, HealthData healthData);
 
