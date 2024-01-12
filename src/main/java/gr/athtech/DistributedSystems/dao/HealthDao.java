@@ -124,13 +124,13 @@ public class HealthDao implements HealthDaoInterface {
         String sqlCommand;
         if(startDate != null && endDate != null && startDate.after(endDate)) return null;
         else if(startDate == null && endDate == null) {
-            sqlCommand = "SELECT * FROM health_data;";
+            sqlCommand = "SELECT AVG(carb_intake) FROM health_data;";
         } else if (startDate == null) {
-            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN (SELECT MIN(date) FROM health_data) AND ?;";
+            sqlCommand = "SELECT AVG(carb_intake) FROM health_data WHERE date BETWEEN (SELECT MIN(date) FROM health_data) AND ?;";
         } else if (endDate == null) {
-            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND (SELECT MAX(date) FROM health_data);";
+            sqlCommand = "SELECT AVG(carb_intake) FROM health_data WHERE date BETWEEN ? AND (SELECT MAX(date) FROM health_data);";
         } else {
-            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND ?;";
+            sqlCommand = "SELECT AVG(carb_intake) FROM health_data WHERE date BETWEEN ? AND ?;";
         }
             // Open a connection
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
