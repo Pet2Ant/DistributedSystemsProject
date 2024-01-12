@@ -1,7 +1,7 @@
-    function createProduct() {
+    function createMeasurement() {
 
     document.getElementById("errorDiv").innerHTML ='';
-    var url = "http://localhost:8080/athtechEshop_war_exploded/api/healthdata/";
+    var url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     var method = "POST";
     var data = {
         id:Number(document.getElementById("id").value),
@@ -42,7 +42,7 @@
 
 function findProduct() {
     document.getElementById("errorDiv").innerHTML ='';
-    var url = "http://localhost:8080/athtechEshop_war_exploded/api/product/";
+    var url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     var method = "GET";
     var productId =   Number(document.getElementById("productId").value);
 
@@ -78,7 +78,7 @@ function findProduct() {
 function getAllProduct() {
     document.getElementById("errorDiv").innerHTML ='';
 
-    var url = "http://localhost:8080/athtechEshop_war_exploded/api/product/";
+    var url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     var method = "GET";
 
 
@@ -123,7 +123,7 @@ function getAllProduct() {
 
 function changeProduct() {
     document.getElementById("errorDiv").innerHTML ='';
-    var url = "http://localhost:8080/athtechEshop_war_exploded/api/product/";
+    var url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     var method = "PUT";
 
     var data = {
@@ -165,7 +165,7 @@ function changeProduct() {
 
 function deleteProduct() {
     document.getElementById("errorDiv").innerHTML ='';
-    var url = "http://localhost:8080/athtechEshop_war_exploded/api/product/";
+    var url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     var method = "DELETE";
     var productId =   Number(document.getElementById("productId").value);
 

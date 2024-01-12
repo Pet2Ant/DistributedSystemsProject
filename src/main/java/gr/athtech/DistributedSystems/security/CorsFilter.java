@@ -1,4 +1,4 @@
-package gr.athtech.athtecheshop.security;
+package gr.athtech.DistributedSystems.security;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;

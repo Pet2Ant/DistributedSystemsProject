@@ -1,10 +1,12 @@
-package gr.athtech.athtecheshop.resource;
+package gr.athtech.DistributedSystems.resource;
 
-import gr.athtech.athtecheshop.dao.HealthDao;
-import gr.athtech.athtecheshop.model.HealthData;
+import gr.athtech.DistributedSystems.dao.HealthDao;
+import gr.athtech.DistributedSystems.model.HealthData;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Path("/healthdata")
@@ -18,6 +20,14 @@ public class HealthDataResource {
     public String hello() {
         return "Hello, World!";
     }
+
+//    @GET
+//    @Path("/over-time-period/{startDate}/{endDate}")
+//    @Produces(MediaType.APPLICATION_JSON )
+//    @Consumes(MediaType.APPLICATION_JSON )
+//    public List<HealthData> displayOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate) {
+//        return healthDao.displayOverTimePeriod(startDate, endDate);
+//    }
 
 
     @GET
@@ -35,6 +45,7 @@ public class HealthDataResource {
         return healthDao.findHealthDataById(id);
     }
 
+
     @POST
     @Produces(MediaType.APPLICATION_JSON )
     @Consumes(MediaType.APPLICATION_JSON )
@@ -44,22 +55,23 @@ public class HealthDataResource {
     }
 
     @PUT
-    //   @Path("/")
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON )
     @Consumes(MediaType.APPLICATION_JSON )
-    public HealthData updateHealthData(HealthData healthData) {
-        int existingHealthData = healthData.getId();
-        healthDao.changeHealthData(existingHealthData, healthData);
+    public HealthData updateHealthData(@PathParam("id") int id,HealthData healthData) {
+        healthDao.changeHealthDataById(id, healthData);
         return healthData;
     }
 
     @DELETE
-    @Path("/{productId}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON )
     @Consumes(MediaType.APPLICATION_JSON )
-    public HealthData deleteHealthData(@PathParam("productId") int healthdataId) {
+    public HealthData deleteHealthData(@PathParam("id") int healthdataId) {
         HealthData healthData = healthDao.findHealthDataById(healthdataId);
         healthDao.removeHealthDataById(healthdataId);
         return healthData;
     }
+
+
 }

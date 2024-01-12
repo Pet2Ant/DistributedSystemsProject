@@ -1,6 +1,8 @@
-package gr.athtech.athtecheshop.dao;
+package gr.athtech.DistributedSystems.dao;
 
-import gr.athtech.athtecheshop.model.HealthData;
+import gr.athtech.DistributedSystems.model.HealthData;
+
+import java.sql.Date;
 import java.util.List;
 
 public interface HealthDaoInterface {
@@ -11,10 +13,14 @@ public interface HealthDaoInterface {
      
      // GET ALL
      List<HealthData> findAllHealthData();
+
+//     List<HealthData> displayOverTimePeriod(Date startDate, Date endDate);
      
      // PUT
-     boolean changeHealthData(int healthDataId, HealthData healthData);
+     boolean changeHealthDataById(int healthDataId, HealthData healthData);
 
      // DELETE BY ID
      boolean removeHealthDataById(int healthDataId);
+
+
 }
