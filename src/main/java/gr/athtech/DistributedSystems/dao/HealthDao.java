@@ -88,28 +88,31 @@ public class HealthDao implements HealthDaoInterface {
         String sqlCommand;
         if(startDate != null && endDate != null && startDate.after(endDate)) return null;
         else if(startDate == null && endDate == null) {
-            sqlCommand = "SELECT * FROM health_data;";
+            sqlCommand = "SELECT AVG(blood_glucose_level) FROM health_data;";
         } else if (startDate == null) {
-            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN (SELECT MIN(date) FROM health_data) AND ?;";
+            sqlCommand = "SELECT AVG(blood_glucose_level) FROM health_data WHERE date BETWEEN (SELECT MIN(date) FROM health_data) AND ?;";
         } else if (endDate == null) {
-            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND (SELECT MAX(date) FROM health_data);";
+            sqlCommand = "SELECT AVG(blood_glucose_level) FROM health_data WHERE date BETWEEN ? AND (SELECT MAX(date) FROM health_data);";
         } else {
-            sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND ?;";
+            sqlCommand = "SELECT AVG(blood_glucose_level) FROM health_data WHERE date BETWEEN ? AND ?;";
         }
-            // Open a connection
-            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-                 PreparedStatement stmt = conn.prepareStatement(sqlCommand);
-            ) {
-                ResultSet results = stmt.executeQuery();
-                if (results.next()) {
-                    return results.getDouble(1);
-                } else {
-                    return null;
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        // Open a connection
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement stmt = conn.prepareStatement(sqlCommand);
+        ) {
+            if(startDate != null) stmt.setDate(1, startDate);
+            if(endDate != null) stmt.setDate(startDate == null ? 1 : 2, endDate);
+            ResultSet results = stmt.executeQuery();
+            if (results.next()) {
+                return results.getDouble(1);
+            } else {
+                return null;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @Override
     public Double averageCarbIntakeOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate) {
@@ -130,18 +133,20 @@ public class HealthDao implements HealthDaoInterface {
             sqlCommand = "SELECT * FROM health_data WHERE date BETWEEN ? AND ?;";
         }
             // Open a connection
-            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-                 PreparedStatement stmt = conn.prepareStatement(sqlCommand);
-            ) {
-                ResultSet results = stmt.executeQuery();
-                if (results.next()) {
-                    return results.getDouble(1);
-                } else {
-                    return null;
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement stmt = conn.prepareStatement(sqlCommand);
+        ) {
+            if(startDate != null) stmt.setDate(1, startDate);
+            if(endDate != null) stmt.setDate(startDate == null ? 1 : 2, endDate);
+            ResultSet results = stmt.executeQuery();
+            if (results.next()) {
+                return results.getDouble(1);
+            } else {
+                return null;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
