@@ -2,26 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title> Diabetes monitor</title>
 </head>
 <body>
-<h1> Product manager</h1>
+<h1> Diabetes monitor</h1>
 
-<a href="http://localhost:8080/athtechEshop_war_exploded/api/product/hello">Add</a>
-<a href="http://localhost:8080/athtechEshop_war_exploded/api/product">Get all health data</a>
-<a href="http://localhost:8080/athtechEshop_war_exploded/api/product">Change health data</a>
-<a href="http://localhost:8080/athtechEshop_war_exploded/api/product">Delete health data</a> <br>
-
-<input type="button" value="Add health data" onclick="createProduct()">
-<input type="button" value="Find healthdata" onclick="findProduct()">
-<input type="button" value="Get all data" onclick="getAllProduct()">
-<input type="button" value="Change healthdata" onclick="changeProduct()">
-<input type="button" value="Delete data" onclick="deleteProduct()">
+<input type="button" value="Add health data" onclick="createMeasurement()">
+<input type="button" value="Find health data by id" onclick="findHealthDataById()">
+<input type="button" value="Get all data" onclick="getAllMeasurements()">
+<input type="button" value="Change healthdata" onclick="changeHealthData()">
+<input type="button" value="Get average blood glucose level over a period of time" onclick="getAvgBloodGlucoseLevel()">
+<input type="button" value="Get average carbs intake over a period of time" onclick="getAvgCarbIntake()">
+<input type="button" value="Display all health data over a period of time" onclick="displayOverAPeriodOfTime()">
+<input type="button" value="Delete data by id" onclick="deleteHealthData()">
 <br>
 
+
 <div id="parametersDiv">
-       <label for="id">ID:</label><br>
-       <input type="number" id="id" name="id"><br>
+       <label for="healthId">ID:</label><br>
+       <input type="number" id="healthId" name="healthId"><br>
        <label for="date">Date:</label><br>
        <input type="date" id="date" name="date"><br>
        <label for="bloodGlucoseLevel">Blood Glucose Level:</label><br>
@@ -30,8 +29,12 @@
        <input type="number" id="carbIntake" name="carbIntake" step="0.01"><br>
        <label for="medicationDose">Medication Dose:</label><br>
        <input type="number" id="medicationDose" name="medicationDose" step="0.01"><br>
-
+       <label for="startDate">Start Date:</label><br>
+       <input type="date" id="startDate" name="startDate"><br>
+       <label for="endDate">End Date:</label><br>
+       <input type="date" id="endDate" name="endDate"><br>
 </div>
+
 <div id="resultDiv"></div>
 <div id="errorDiv"></div>
 

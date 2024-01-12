@@ -28,6 +28,7 @@ public class HealthDao implements HealthDaoInterface {
              PreparedStatement stmt = conn.prepareStatement(sqlCommand,
                      Statement.RETURN_GENERATED_KEYS );
         ) {
+
             stmt.setInt(1, healthData.getId());
             stmt.setDouble(2, healthData.getBloodGlucoseLevel());
             stmt.setDouble(3, healthData.getCarbIntake());
@@ -269,7 +270,7 @@ public class HealthDao implements HealthDaoInterface {
             stmt.setDouble(1, healthData.getBloodGlucoseLevel());
             stmt.setDouble(2, healthData.getCarbIntake());
             stmt.setDouble(3, healthData.getMedicationDose());
-            stmt.setDate(4, healthData1.getDate());
+            stmt.setDate(4, healthData.getDate());
             stmt.setInt(5, healthDataId);
             stmt.execute();
             return true;
