@@ -21,13 +21,13 @@ public class HealthDataResource {
         return "Hello, World!";
     }
 
-//    @GET
-//    @Path("/over-time-period/{startDate}/{endDate}")
-//    @Produces(MediaType.APPLICATION_JSON )
-//    @Consumes(MediaType.APPLICATION_JSON )
-//    public List<HealthData> displayOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate) {
-//        return healthDao.displayOverTimePeriod(startDate, endDate);
-//    }
+    @GET
+    @Path("/otp")
+    @Produces(MediaType.APPLICATION_JSON )
+    @Consumes(MediaType.APPLICATION_JSON )
+    public List<HealthData> displayOverTimePeriod(@QueryParam("startDate") java.sql.Date startDate , @QueryParam("endDate") java.sql.Date endDate) {
+        return healthDao.displayOverTimePeriod(startDate, endDate);
+    }
 
 
     @GET

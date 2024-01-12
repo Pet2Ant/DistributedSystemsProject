@@ -14,7 +14,7 @@ public interface HealthDaoInterface {
      // GET ALL
      List<HealthData> findAllHealthData();
 
-//     List<HealthData> displayOverTimePeriod(Date startDate, Date endDate);
+     List<HealthData> displayOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate);
      
      // PUT
      boolean changeHealthDataById(int healthDataId, HealthData healthData);

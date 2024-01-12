@@ -18,7 +18,7 @@ public class HealthData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Date date;
+    private java.sql.Date date;
     @JsonProperty("blood_glucose_level")
     private double bloodGlucoseLevel;
     @JsonProperty("carb_intake")

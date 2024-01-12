@@ -32,8 +32,7 @@ public class HealthDao implements HealthDaoInterface {
             stmt.setDouble(2, healthData.getBloodGlucoseLevel());
             stmt.setDouble(3, healthData.getCarbIntake());
             stmt.setDouble(4, healthData.getMedicationDose());
-            java.sql.Date sqlDate = healthData.getDate();
-            stmt.setDate(5, sqlDate);
+            stmt.setDate(5, healthData.getDate());
             stmt.execute();
             ResultSet results = stmt.getGeneratedKeys();
             results.next();
@@ -93,15 +92,15 @@ public class HealthDao implements HealthDaoInterface {
              PreparedStatement stmt = conn.prepareStatement(sqlCommand );
         ) {
             ResultSet results = stmt.executeQuery();
-           while( results.next()) {
-               HealthData healthData = new HealthData();
-               healthData.setId(results.getInt("id"));
-               healthData.setBloodGlucoseLevel(results.getDouble("blood_glucose_level"));
-               healthData.setCarbIntake(results.getDouble("carb_intake"));
-               healthData.setMedicationDose(results.getDouble("medication_dose"));
-               healthData.setDate(results.getDate("date"));
-               healthDatas.add(healthData);
-           }
+            while( results.next()) {
+                HealthData healthData = new HealthData();
+                healthData.setId(results.getInt("id"));
+                healthData.setBloodGlucoseLevel(results.getDouble("blood_glucose_level"));
+                healthData.setCarbIntake(results.getDouble("carb_intake"));
+                healthData.setMedicationDose(results.getDouble("medication_dose"));
+                healthData.setDate(results.getDate("date"));
+                healthDatas.add(healthData);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -110,43 +109,44 @@ public class HealthDao implements HealthDaoInterface {
     }
 
     //    Get over a time period
-//    public List<HealthData> displayOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate) {
-//        List<HealthData> healthDatas = new ArrayList<>();
-//        try {
-//            Class.forName(JDBC_DRIVER);
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//        String sqlCommand = "select * from health_data where date between ? and ?;";
-//        // Open a connection
-//        try( Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-//             PreparedStatement stmt = conn.prepareStatement(sqlCommand );
-//        ) {
-//
-//            stmt.setDate(1, startDate);
-//            stmt.setDate(2, endDate);
-//            ResultSet results = stmt.executeQuery();
-//           while( results.next()) {
-//               HealthData healthData = new HealthData();
-//               healthData.setId(results.getInt("id"));
-//               healthData.setBloodGlucoseLevel(results.getDouble("blood_glucose_level"));
-//               healthData.setCarbIntake(results.getDouble("carb_intake"));
-//               healthData.setMedicationDose(results.getDouble("medication_dose"));
-//               healthData.setDate(results.getDate("date"));
-//               healthDatas.add(healthData);
-//           }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        return healthDatas;
-//    }
+    public List<HealthData> displayOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate) {
+        List<HealthData> healthDatas = new ArrayList<>();
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        if(startDate==null || endDate==null) return findAllHealthData();
+        String sqlCommand = "select * from health_data where date between ? and ?;";
+        // Open a connection
+        try( Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement stmt = conn.prepareStatement(sqlCommand );
+        ) {
+
+            stmt.setDate(1, startDate);
+            stmt.setDate(2, endDate);
+            ResultSet results = stmt.executeQuery();
+            while( results.next()) {
+                HealthData healthData = new HealthData();
+                healthData.setId(results.getInt("id"));
+                healthData.setBloodGlucoseLevel(results.getDouble("blood_glucose_level"));
+                healthData.setCarbIntake(results.getDouble("carb_intake"));
+                healthData.setMedicationDose(results.getDouble("medication_dose"));
+                healthData.setDate(results.getDate("date"));
+                healthDatas.add(healthData);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return healthDatas;
+    }
 
     // PUT
     @Override
-public boolean changeHealthDataById(int healthDataId, HealthData healthData) {
+    public boolean changeHealthDataById(int healthDataId, HealthData healthData) {
         HealthData healthData1 = findHealthDataById(healthDataId);
-      if (healthData1==null) return false;
+        if (healthData1==null) return false;
 
         try {
             Class.forName(JDBC_DRIVER);
@@ -161,8 +161,7 @@ public boolean changeHealthDataById(int healthDataId, HealthData healthData) {
             stmt.setDouble(1, healthData.getBloodGlucoseLevel());
             stmt.setDouble(2, healthData.getCarbIntake());
             stmt.setDouble(3, healthData.getMedicationDose());
-            java.sql.Date sqlDate = healthData1.getDate();
-            stmt.setDate(4, sqlDate);
+            stmt.setDate(4, healthData1.getDate());
             stmt.setInt(5, healthDataId);
             stmt.execute();
             return true;
