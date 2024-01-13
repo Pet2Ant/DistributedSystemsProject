@@ -230,7 +230,7 @@ public class HealthDao implements HealthDaoInterface {
         } else {
             sqlCommand = "SELECT AVG(carb_intake) FROM health_data WHERE date BETWEEN ? AND ?;";
         }
-            // Open a connection
+        // Open a connection
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement stmt = conn.prepareStatement(sqlCommand);
         ) {
