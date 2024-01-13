@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/DistributedSystems.war $PORT
+web: java $JAVA_OPTS -jar target/DistributedSystems.jar $PORT
