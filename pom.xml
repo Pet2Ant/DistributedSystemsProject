@@ -7,13 +7,13 @@
     <groupId>gr.athtech</groupId>
     <artifactId>DistributedSystems</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>athtechEshop</name>
+    <name>DistributedSystems</name>
     <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
         <junit.version>5.9.2</junit.version>
     </properties>
 
@@ -61,7 +61,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.3</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
@@ -75,6 +79,7 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.15.3</version>
         </dependency>
+
     </dependencies>
 
     <build>
