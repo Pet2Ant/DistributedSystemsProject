@@ -2,6 +2,8 @@ function createMeasurement() {
     document.getElementById("errorDiv").innerHTML = '';
     const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     const method = "POST";
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
     const data = {
         id: Number(document.getElementById("healthId").value),
         blood_glucose_level: Number(document.getElementById("bloodGlucoseLevel").value),
@@ -9,6 +11,7 @@ function createMeasurement() {
         medication_dose: Number(document.getElementById("medicationDose").value),
         date: new Date(document.getElementById("date").value).toISOString()
     };
+
     fetch(url, {
         method: method, // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -16,7 +19,7 @@ function createMeasurement() {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Basic " + btoa(username + ":" + password)
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -46,7 +49,8 @@ function findHealthDataById() {
     const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     const method = "GET";
     const healthId = Number(document.getElementById("healthId").value);
-
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
     fetch(url + healthId, {
         method: method, // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -54,7 +58,7 @@ function findHealthDataById() {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Basic " + btoa(username + ":" + password)
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -87,7 +91,8 @@ function getAllMeasurements() {
 
     const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     const method = "GET";
-
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
 
     fetch(url, {
         method: method, // *GET, POST, PUT, DELETE, etc.
@@ -96,7 +101,7 @@ function getAllMeasurements() {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Basic " + btoa(username + ":" + password)
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -140,7 +145,8 @@ function getAvgBloodGlucoseLevel() {
     if (endDate) url.searchParams.append('endDate', endDate);
 
     const method = "GET";
-
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
     fetch(url, {
         method: method, // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -148,7 +154,7 @@ function getAvgBloodGlucoseLevel() {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Basic " + btoa(username + ":" + password)
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -184,7 +190,8 @@ function getAvgCarbIntake() {
     if (endDate) url.searchParams.append('endDate', endDate);
 
     const method = "GET";
-
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
     fetch(url, {
         method: method, // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -192,7 +199,7 @@ function getAvgCarbIntake() {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Basic " + btoa(username + ":" + password)
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -216,27 +223,41 @@ function displayGlucoseChart()
 {
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
-
-    // Create a new URL object
     const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/glucoseLevelOverTimePeriod");
-
-    // Append the search parameters
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
     if (startDate) url.searchParams.append('startDate', startDate);
     if (endDate) url.searchParams.append('endDate', endDate);
-    document.getElementById('glucoseChart').src = url;
+    fetch(url, {
+        headers: {
+            "Authorization": "Basic " + btoa(username + ":" + password)
+        }
+    })
+        .then(response => response.blob())
+        .then(blob => {
+            var img = document.getElementById('glucoseChart');
+            img.src = URL.createObjectURL(blob);
+        });
 }
 function carbIntakeChart()
 {
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
-
-
     const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/carbIntakeOverTimePeriod");
-
-
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
     if (startDate) url.searchParams.append('startDate', startDate);
     if (endDate) url.searchParams.append('endDate', endDate);
-    document.getElementById('carbIntakeChart').src = url;
+    fetch(url, {
+        headers: {
+            "Authorization": "Basic " + btoa(username + ":" + password)
+        }
+    })
+        .then(response => response.blob())
+        .then(blob => {
+            var img = document.getElementById('carbIntakeChart');
+            img.src = URL.createObjectURL(blob);
+        });
 }
 function displayOverAPeriodOfTime() {
     document.getElementById("errorDiv").innerHTML = '';
@@ -246,7 +267,8 @@ function displayOverAPeriodOfTime() {
     if (startDate) url.searchParams.append('startDate', startDate);
     if (endDate) url.searchParams.append('endDate', endDate);
     const method = "GET";
-
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
 
     fetch(url, {
         method: method, // *GET, POST, PUT, DELETE, etc.
@@ -255,7 +277,7 @@ function displayOverAPeriodOfTime() {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Basic " + btoa(username + ":" + password)
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -294,7 +316,8 @@ function changeHealthData() {
         medication_dose: Number(document.getElementById("medicationDose").value),
         date: new Date(document.getElementById("date").value).toISOString()
     };
-
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
 
     fetch(url + data.id, {
         method: method, // *GET, POST, PUT, DELETE, etc.
@@ -303,7 +326,7 @@ function changeHealthData() {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Basic " + btoa(username + ":" + password)
         },
         body: JSON.stringify(data), // body data type must match "Content-Type" header
         redirect: "follow", // manual, *follow, error
@@ -333,7 +356,8 @@ function deleteHealthData() {
     const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
     const method = "DELETE";
     const healthId = Number(document.getElementById("healthId").value);
-
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
     fetch(url + healthId, {
         method: method, // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -341,7 +365,7 @@ function deleteHealthData() {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Basic " + btoa(username + ":" + password)
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -360,4 +384,8 @@ function deleteHealthData() {
                 document.getElementById("errorDiv").innerHTML = 'here was a problem with the Fetch operation:';
             }
         });
+
+
+
+
 }
