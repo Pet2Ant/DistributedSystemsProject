@@ -212,7 +212,32 @@ function getAvgCarbIntake() {
             }
         });
 }
+function displayGlucoseChart()
+{
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
 
+    // Create a new URL object
+    const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/glucoseLevelOverTimePeriod");
+
+    // Append the search parameters
+    if (startDate) url.searchParams.append('startDate', startDate);
+    if (endDate) url.searchParams.append('endDate', endDate);
+    document.getElementById('glucoseChart').src = url;
+}
+function carbIntakeChart()
+{
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+
+
+    const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/carbIntakeOverTimePeriod");
+
+
+    if (startDate) url.searchParams.append('startDate', startDate);
+    if (endDate) url.searchParams.append('endDate', endDate);
+    document.getElementById('carbIntakeChart').src = url;
+}
 function displayOverAPeriodOfTime() {
     document.getElementById("errorDiv").innerHTML = '';
     const startDate = document.getElementById("startDate").value;

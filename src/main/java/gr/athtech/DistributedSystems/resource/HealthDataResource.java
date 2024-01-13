@@ -69,16 +69,16 @@ public class HealthDataResource {
         response.header("Content-Disposition", "attachment; filename=\"BloodGlucoseChart.png\"");
         return response.build();
     }
-//    @GET
-//    @Path("/carbIntakeOverTimePeriod")
-//    @Produces("image/png")
-//    public Response carbIntakeOverTimePeriod(@QueryParam("startDate") java.sql.Date startDate, @QueryParam("endDate") java.sql.Date endDate) {
-//        healthDao.carbIntakeOverTimePeriod(startDate, endDate);
-//        File file = new File("CarbIntakeChart.png");
-//        Response.ResponseBuilder response = Response.ok((Object) file);
-//        response.header("Content-Disposition", "attachment; filename=\"CarbIntakeChart.png\"");
-//        return response.build();
-//    }
+    @GET
+    @Path("/carbIntakeOverTimePeriod")
+    @Produces("image/png")
+    public Response carbIntakeOverTimePeriod(@QueryParam("startDate") java.sql.Date startDate, @QueryParam("endDate") java.sql.Date endDate) {
+        healthDao.carbIntakeOverTimePeriod(startDate, endDate);
+        File file = new File("CarbIntake.png");
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition", "attachment; filename=\"CarbIntake.png\"");
+        return response.build();
+    }
     @POST
     @Produces(MediaType.APPLICATION_JSON )
     @Consumes(MediaType.APPLICATION_JSON )

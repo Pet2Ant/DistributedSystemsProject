@@ -150,7 +150,7 @@ public class HealthDao implements HealthDaoInterface {
             }
             dataset.addSeries(bloodGlucoseSeries);
             JFreeChart lineChart = ChartFactory.createTimeSeriesChart(
-                    "Daily Blood Glucose Level and Carb Intake",
+                    "Daily Blood Glucose Level ",
                     "Date",
                     "Value",
                     dataset
@@ -166,33 +166,51 @@ public class HealthDao implements HealthDaoInterface {
         }
 
     }
-//    @Override
-//    public List<HealthData> carbIntakeDataList(java.sql.Date startDate, java.sql.Date endDate) {
-//        try {
-//            Class.forName(JDBC_DRIVER);
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//        String sqlCommand = "select carb_intake from health_data where date between ? and ?;";
-//        // Open a connection
-//        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-//             PreparedStatement stmt = conn.prepareStatement(sqlCommand);
-//        ) {
-//            stmt.setDate(1, startDate);
-//            stmt.setDate(2, endDate);
-//            ResultSet results = stmt.executeQuery();
-//            List<HealthData> healthDataList = new ArrayList<>();
-//            while (results.next()) {
-//                HealthData healthData = new HealthData();
-//                healthData.setCarbIntake(results.getDouble("carb_intake"));
-//                healthDataList.add(healthData);
-//            }
-//            return healthDataList;
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
+    @Override
+    public  void carbIntakeOverTimePeriod(Date startDate, Date endDate) {
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
+        TimeSeries carbIntakeSeries = new TimeSeries("Carb intake level");
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        String sqlCommand = "select carb_intake, date from health_data where date between ? and ?;";
+
+        // Open a connection
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement stmt = conn.prepareStatement(sqlCommand);
+        ) {
+            stmt.setDate(1, startDate);
+            stmt.setDate(2, endDate);
+            ResultSet results = stmt.executeQuery();
+            List<HealthData> healthDataList = new ArrayList<>();
+            while (results.next()) {
+                HealthData healthData = new HealthData();
+                healthData.setBloodGlucoseLevel(results.getDouble("carb_intake"));
+                java.sql.Date sqlDate = results.getDate("date");
+                java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
+                Day currentDay = new Day(utilDate);
+                carbIntakeSeries.addOrUpdate(currentDay, healthData.getBloodGlucoseLevel());
+            }
+            dataset.addSeries(carbIntakeSeries);
+            JFreeChart lineChart = ChartFactory.createTimeSeriesChart(
+                    "Daily  Carb Intake",
+                    "Date",
+                    "Value",
+                    dataset
+            );
+            File chartFile = new File("CarbIntake.png");
+            try {
+                ChartUtils.saveChartAsPNG(chartFile, lineChart, 600, 400);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     @Override
     public Double averageCarbIntakeOverTimePeriod(java.sql.Date startDate, java.sql.Date endDate) {
