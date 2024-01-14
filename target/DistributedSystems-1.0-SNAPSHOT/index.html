@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Diabetes monitor</title>
+</head>
+<body>
+<h1> Diabetes monitor</h1>
+
+<input type="button" value="Add health data" onclick="createMeasurement()">
+<input type="button" value="Find health data by id" onclick="findHealthDataById()">
+<input type="button" value="Get all data" onclick="getAllMeasurements()">
+<input type="button" value="Change healthdata" onclick="changeHealthData()">
+<input type="button" value="Get average blood glucose level over a period of time" onclick="getAvgBloodGlucoseLevel()">
+<input type="button" value="Get average carbs intake over a period of time" onclick="getAvgCarbIntake()">
+<input type="button" value="Display all health data over a period of time" onclick="displayOverAPeriodOfTime()">
+<input type="button" value="Delete data by id" onclick="deleteHealthData()">
+<br>
+
+<h1>Blood Glucose Level Chart</h1>
+<img id="glucoseChart" src="" alt="glucose">
+<button onclick="displayGlucoseChart()">Display Glucose chart</button>
+<h1>Carb intake Level Chart</h1>
+<img id="carbIntakeChart" src="" alt="carbintake">
+<button onclick="carbIntakeChart()">Display Carb intake chart</button>
+
+<div id="parametersDiv">
+       <label for="healthId">ID:</label><br>
+       <input type="number" id="healthId" name="healthId"><br>
+       <label for="date">Date:</label><br>
+       <input type="date" id="date" name="date"><br>
+       <label for="bloodGlucoseLevel">Blood Glucose Level:</label><br>
+       <input type="number" id="bloodGlucoseLevel" name="bloodGlucoseLevel" step="0.01"><br>
+       <label for="carbIntake">Carb Intake:</label><br>
+       <input type="number" id="carbIntake" name="carbIntake" step="0.01"><br>
+       <label for="medicationDose">Medication Dose:</label><br>
+       <input type="number" id="medicationDose" name="medicationDose" step="0.01"><br>
+       <label for="startDate">Start Date:</label><br>
+       <input type="date" id="startDate" name="startDate"><br>
+       <label for="endDate">End Date:</label><br>
+       <input type="date" id="endDate" name="endDate"><br>
+       <label for="username">Username:</label><br>
+       <input type="text" id="username" name="username"><br>
+       <label for="password">Password:</label><br>
+       <input type="password" id="password" name="password"><br>
+
+</div>
+
+<div id="resultDiv"></div>
+<div id="errorDiv"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
