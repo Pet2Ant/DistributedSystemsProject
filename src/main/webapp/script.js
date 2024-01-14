@@ -376,7 +376,9 @@ function deleteHealthData() {
     })
         .then(res => res.json())
         .then(d => {
-            document.getElementById("resultDiv").innerHTML = JSON.stringify(d);
+            document.getElementById("resultDiv").innerHTML += "id = " + element.id +
+                " blood_glucose_level = " + element.blood_glucose_level + " carb_intake = " + element.carb_intake +
+                " medication_dose = " + element.medication_dose + " date = " + convertMillisecondsToDate(element.date) + "<br>"
         })
         .catch(error => {
             if (error instanceof TypeError && error.message.includes('API key')) {
