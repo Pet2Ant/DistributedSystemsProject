@@ -1,6 +1,6 @@
 function createMeasurement() {
     document.getElementById("errorDiv").innerHTML = '';
-    const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
+    const url = "https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/";
     const method = "POST";
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
@@ -46,7 +46,7 @@ function createMeasurement() {
 
 function findHealthDataById() {
     document.getElementById("errorDiv").innerHTML = '';
-    const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
+    const url = "https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/";
     const method = "GET";
     const healthId = Number(document.getElementById("healthId").value);
     var username = document.getElementById('username').value;
@@ -92,7 +92,7 @@ function convertMillisecondsToDate(milliseconds) {
 function getAllMeasurements() {
     document.getElementById("errorDiv").innerHTML = '';
 
-    const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
+    const url = "https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/";
     const method = "GET";
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
@@ -141,7 +141,7 @@ function getAvgBloodGlucoseLevel() {
     const endDate = document.getElementById("endDate").value;
 
     // Create a new URL object
-    const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/avgGlucose");
+    const url = new URL("https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/avgGlucose");
 
     // Append the search parameters
     if (startDate) url.searchParams.append('startDate', startDate);
@@ -186,7 +186,7 @@ function getAvgCarbIntake() {
     const endDate = document.getElementById("endDate").value;
 
     // Create a new URL object
-    const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/avgCarbs");
+    const url = new URL("https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/avgCarbs");
 
     // Append the search parameters
     if (startDate) url.searchParams.append('startDate', startDate);
@@ -226,7 +226,7 @@ function displayGlucoseChart()
 {
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
-    const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/glucoseLevelOverTimePeriod");
+    const url = new URL("https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/glucoseLevelOverTimePeriod");
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     if (startDate) url.searchParams.append('startDate', startDate);
@@ -246,7 +246,7 @@ function carbIntakeChart()
 {
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
-    const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/carbIntakeOverTimePeriod");
+    const url = new URL("https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/carbIntakeOverTimePeriod");
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     if (startDate) url.searchParams.append('startDate', startDate);
@@ -266,7 +266,7 @@ function displayOverAPeriodOfTime() {
     document.getElementById("errorDiv").innerHTML = '';
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
-    const url = new URL("http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/otp");
+    const url = new URL("https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/otp");
     if (startDate) url.searchParams.append('startDate', startDate);
     if (endDate) url.searchParams.append('endDate', endDate);
     const method = "GET";
@@ -309,7 +309,7 @@ function displayOverAPeriodOfTime() {
 
 function changeHealthData() {
     document.getElementById("errorDiv").innerHTML = '';
-    const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
+    const url = "https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/";
     const method = "PUT";
 
     const data = {
@@ -356,7 +356,7 @@ function changeHealthData() {
 
 function deleteHealthData() {
     document.getElementById("errorDiv").innerHTML = '';
-    const url = "http://localhost:8080/DistributedSystems_war_exploded/api/healthdata/";
+    const url = "https://distributed-systems.azurewebsites.net/DistributedSystems-1.0-SNAPSHOT/api/healthdata/";
     const method = "DELETE";
     const healthId = Number(document.getElementById("healthId").value);
     var username = document.getElementById('username').value;
