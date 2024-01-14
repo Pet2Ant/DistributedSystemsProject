@@ -50,4 +50,4 @@ jobs:
           app-name: 'distributed-systems'
           slot-name: 'Production'
           package: '*.war'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FE30302E00974B06945C9371A45FDA26 }}
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
