@@ -15,7 +15,7 @@ import java.util.List;
 
 public class HealthDao implements HealthDaoInterface {
 
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/health";
+    private static final String DB_URL = "jdbc:postgresql://distributedsystems.postgres.database.azure.com:5432/health";
     private static final String USER = "postgres";
     private static final String PASS = "PCa173!!";
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
