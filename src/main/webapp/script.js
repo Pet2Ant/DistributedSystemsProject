@@ -375,7 +375,7 @@ function deleteHealthData() {
         //  body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
         .then(res => res.json())
-        .then(d => {
+        .then(element => {
             document.getElementById("resultDiv").innerHTML += "id = " + element.id +
                 " blood_glucose_level = " + element.blood_glucose_level + " carb_intake = " + element.carb_intake +
                 " medication_dose = " + element.medication_dose + " date = " + convertMillisecondsToDate(element.date) + "<br>"
